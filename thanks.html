@@ -26,7 +26,7 @@
       <a class="btn btn--download" id="downloadBtn" href="#" target="_blank" rel="noopener">Download <span id="downloadName">your styles</span></a>
       <p class="download__hint">Save the file now. Your receipt is in your email.</p>
     </div>
-    <p>Problem with the download? Email <a href="mailto:yarintal.digicam@gmail.com">yarintal.digicam@gmail.com</a> and I'll send it straight away.</p>
+    <p id="helpLine">Problem with the download? Email <a href="mailto:yarintal.digicam@gmail.com">yarintal.digicam@gmail.com</a> and I'll send it straight away.</p>
     <p>I'd love to see what you make. Tag <a href="https://www.instagram.com/yarin19tal/" target="_blank" rel="noopener">@yarin19tal</a>.</p>
     <a class="btn" href="index.html#work">Back to the photos</a>
   </main>
@@ -54,8 +54,14 @@
       const ref = (q.get("ref") || "").replace(/[^A-Z0-9]/gi, "");
       document.getElementById("thanksLead").innerHTML =
         `Your PayPal payment went through${item ? ` for <strong>${item.name}</strong>` : ""}. ` +
-        `I'll send the files to your PayPal email address within a few hours.` +
+        (q.get("order") === "cameras"
+          ? `Thank you for your DIGICAM order! I'll email you within a day to confirm shipping.`
+          : `I'll send the files to your PayPal email address within a few hours.`) +
         (ref ? `<br><span class="order-ref">Order ${ref}</span>` : "");
+      if (q.get("order") === "cameras") {
+        document.getElementById("helpLine").innerHTML =
+          `Questions about your order? Email <a href="mailto:yarintal.digicam@gmail.com">yarintal.digicam@gmail.com</a>.`;
+      }
     }
   </script>
 </body>

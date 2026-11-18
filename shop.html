@@ -119,6 +119,24 @@
     <span>© 2026</span>
   </footer>
 
+  <!-- Bag drawer -->
+  <div class="drawer" id="drawer" hidden>
+    <div class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+      <div class="drawer__head">
+        <h2 id="drawerTitle">Your bag</h2>
+        <button class="drawer__close" type="button" aria-label="Close bag">×</button>
+      </div>
+      <p class="drawer__empty" id="bagEmpty">Your bag is empty. Pick a camera.</p>
+      <ul class="drawer__list" id="bagList"></ul>
+      <div class="drawer__foot" id="bagFoot" hidden>
+        <div class="drawer__total"><span>Total</span><span id="bagTotal"></span></div>
+        <p class="drawer__note">Each camera is one of a kind. Pay with PayPal or card; we confirm shipping with you by email.</p>
+        <button class="drawer__pay" type="button" id="bagPay">Checkout with PayPal</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="presets-data.js"></script>
   <script src="shop.js"></script>
 </body>
 </html>

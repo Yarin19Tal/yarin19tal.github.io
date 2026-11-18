@@ -50,20 +50,102 @@ document.querySelectorAll(".filters button").forEach(btn => {
   });
 });
 
-// Bag counter
+// ---------- Bag ----------
+// Each camera is one of a kind, so it can be in the bag once.
+// The bag is remembered in this browser (localStorage) until checkout.
 const bag = document.querySelector(".bag");
 const count = document.querySelector(".bag__count");
-let items = 0;
+const drawer = document.getElementById("drawer");
+const bagList = document.getElementById("bagList");
+let inBag = [];
+try { inBag = JSON.parse(localStorage.getItem("digicam-bag")) || []; } catch {}
+inBag = inBag.filter(i => cameras[i] && !cameras[i].sold);
+
+function renderBag() {
+  localStorage.setItem("digicam-bag", JSON.stringify(inBag));
+  const n = inBag.length;
+  count.textContent = n;
+  bag.setAttribute("aria-label", `Bag, ${n} item${n === 1 ? "" : "s"}`);
+  grid.querySelectorAll(".card__add").forEach(b => {
+    const c = cameras[b.dataset.i];
+    if (c.sold) return;
+    const has = inBag.includes(+b.dataset.i);
+    b.textContent = has ? "In bag ✓" : "Add to bag";
+    b.classList.toggle("is-in", has);
+  });
+  bagList.innerHTML = inBag.map(i => `
+    <li class="bagitem">
+      <div class="bagitem__thumb" style="--tint:${cameras[i].tint}">${cameras[i].img ? `<img src="${cameras[i].img}" alt="">` : cameraSVG(cameras[i])}</div>
+      <div class="bagitem__info"><strong>${cameras[i].name}</strong><span>${cameras[i].spec}</span>
+        <button type="button" class="bagitem__remove" data-i="${i}">Remove</button></div>
+      <span class="bagitem__price">$${cameras[i].price}</span>
+    </li>`).join("");
+  document.getElementById("bagEmpty").hidden = n > 0;
+  document.getElementById("bagFoot").hidden = n === 0;
+  document.getElementById("bagTotal").textContent = "$" + inBag.reduce((t, i) => t + cameras[i].price, 0);
+}
+
+let lastFocus = null;
+function openBag() {
+  lastFocus = document.activeElement;
+  drawer.hidden = false;
+  document.body.style.overflow = "hidden";
+  drawer.querySelector(".drawer__close").focus();
+}
+function closeBag() {
+  drawer.hidden = true;
+  document.body.style.overflow = "";
+  lastFocus && lastFocus.focus();
+}
+
 grid.addEventListener("click", e => {
   const btn = e.target.closest(".card__add");
   if (!btn || btn.disabled) return;
-  items++;
-  count.textContent = items;
-  bag.setAttribute("aria-label", `Bag, ${items} item${items === 1 ? "" : "s"}`);
-  btn.textContent = "Added ✓";
-  setTimeout(() => (btn.textContent = "Add to bag"), 1400);
+  const i = +btn.dataset.i;
+  if (inBag.includes(i)) { openBag(); return; }
+  inBag.push(i);
+  renderBag();
   bag.classList.remove("bump"); void bag.offsetWidth; bag.classList.add("bump");
 });
+bag.addEventListener("click", openBag);
+drawer.querySelector(".drawer__close").addEventListener("click", closeBag);
+drawer.addEventListener("click", e => { if (e.target === drawer) closeBag(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !drawer.hidden) closeBag(); });
+bagList.addEventListener("click", e => {
+  const r = e.target.closest(".bagitem__remove");
+  if (!r) return;
+  inBag = inBag.filter(i => i !== +r.dataset.i);
+  renderBag();
+});
+
+// Checkout: a PayPal cart with every camera in the bag. PayPal asks the buyer for a shipping address.
+document.getElementById("bagPay").addEventListener("click", () => {
+  if (!inBag.length) return;
+  const here = location.href.replace(/[^/]*$/, "");
+  const f = document.createElement("form");
+  f.method = "post";
+  f.action = "https://www.paypal.com/cgi-bin/webscr";
+  const fields = {
+    cmd: "_cart", upload: "1", business: PAYPAL.merchantId, currency_code: PAYPAL.currency,
+    no_shipping: "2", charset: "utf-8",
+    return: `${here}thanks.html?paid=paypal&order=cameras`,
+    cancel_return: location.href,
+  };
+  inBag.forEach((i, k) => {
+    fields[`item_name_${k + 1}`] = `DIGICAM — ${cameras[i].name}`;
+    fields[`amount_${k + 1}`] = cameras[i].price.toFixed(2);
+    fields[`quantity_${k + 1}`] = "1";
+  });
+  for (const [k, v] of Object.entries(fields)) {
+    const inp = document.createElement("input");
+    inp.type = "hidden"; inp.name = k; inp.value = v;
+    f.appendChild(inp);
+  }
+  document.body.appendChild(f);
+  f.submit();
+});
+
+renderBag();
 
 // Contact form (front-end only for now)
 document.getElementById("contactForm").addEventListener("submit", e => {
