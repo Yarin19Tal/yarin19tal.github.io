@@ -6,7 +6,7 @@
 //  `series`: "fuji" | "ricoh" | "bw"  (used by the filter buttons)
 //  The big opening photo is photos/hero.jpg.
 // ─────────────────────────────────────────────────────────────
-const HERO_CAPTION = "Italy · Fuji X100V";
+const HERO_CAPTION = "Italy · Fuji X100V";   // Hebrew version is in i18n.js
 
 const CAMERAS = { fuji: "Fuji X100V", ricoh: "Ricoh GR", bw: "Ricoh GR" };
 
@@ -63,12 +63,12 @@ const heroImg = new Image();
 heroImg.onload = () => (hero.style.backgroundImage = `url("${hero.dataset.src}")`);
 heroImg.onerror = () => hero.classList.add("is-missing");
 heroImg.src = hero.dataset.src;
-document.getElementById("heroCaption").textContent = HERO_CAPTION;
+document.getElementById("heroCaption").textContent = T(HERO_CAPTION);
 
 // ---------- Gallery (masonry that keeps reading order left → right) ----------
 const gallery = document.getElementById("gallery");
 const countEl = document.getElementById("workCount");
-const label = p => p.place || "Untitled";
+const label = p => T(p.place || "Untitled");
 let filter = "all";
 
 const figures = photos.map((p, i) => {
@@ -80,7 +80,7 @@ const figures = photos.map((p, i) => {
     <div class="shot__frame" style="aspect-ratio:${p.w} / ${p.h}">
       <img src="photos/thumbs/${p.file}" alt="${label(p)}, ${CAMERAS[p.series]}" loading="lazy" width="${p.w}" height="${p.h}">
     </div>
-    <figcaption><span>${label(p)}</span><span>${CAMERAS[p.series]}${p.series === "bw" ? " · B&amp;W" : ""}</span></figcaption>`;
+    <figcaption><span>${label(p)}</span><span>${CAMERAS[p.series]}${p.series === "bw" ? T(" · B&W") : ""}</span></figcaption>`;
   return fig;
 });
 
@@ -101,7 +101,7 @@ function layout() {
   }
   gallery.replaceChildren(...cols.map(c => c.el));
   const v = visible().length;
-  countEl.textContent = `${v} photograph${v === 1 ? "" : "s"}`;
+  countEl.textContent = v === 1 ? T("1 photograph") : T("{n} photographs", { n: v });
 }
 
 let lastCols = 0;
@@ -166,8 +166,9 @@ box.addEventListener("click", e => { if (e.target === box) close(); });
 document.addEventListener("keydown", e => {
   if (box.hidden) return;
   if (e.key === "Escape") close();
-  if (e.key === "ArrowRight") step(1);
-  if (e.key === "ArrowLeft") step(-1);
+  const rtl = document.documentElement.dir === "rtl";   // in Hebrew, "next" is on the left
+  if (e.key === "ArrowRight") step(rtl ? -1 : 1);
+  if (e.key === "ArrowLeft") step(rtl ? 1 : -1);
 });
 
 // ---------- Top bar turns solid after the hero ----------

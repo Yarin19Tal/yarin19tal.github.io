@@ -7,17 +7,17 @@ list.innerHTML = PRESETS.map(p => `
       <div class="compare__layer compare__before"></div>
       <div class="compare__layer compare__after" style="${p.afterPhoto ? "" : `filter:${p.look}`}"></div>
       <div class="compare__line"></div>
-      <span class="compare__tag compare__tag--before">Before</span>
-      <span class="compare__tag compare__tag--after">${p.name}${p.afterPhoto ? "" : " · preview"}</span>
-      <input type="range" min="0" max="100" value="50" step="0.5" aria-label="Compare before and after for ${p.name}">
+      <span class="compare__tag compare__tag--before">${T("Before")}</span>
+      <span class="compare__tag compare__tag--after">${p.name}${p.afterPhoto ? "" : T(" · preview")}</span>
+      <input type="range" min="0" max="100" value="50" step="0.5" aria-label="${T("Compare before and after for {name}", { name: p.name })}">
     </div>
     <div class="preset__text">
       <h2 class="preset__name">${p.name}</h2>
-      <p class="preset__mood">${p.mood}</p>
-      <p class="preset__desc">${p.desc}</p>
+      <p class="preset__mood">${T(p.mood)}</p>
+      <p class="preset__desc">${T(p.desc)}</p>
       <div class="preset__buy">
         <span class="preset__price">${CURRENCY}${p.price}</span>
-        <a class="btn" href="checkout.html?item=${p.id}">Add to bag</a>
+        <a class="btn" href="checkout.html?item=${p.id}">${T("Add to bag")}</a>
       </div>
     </div>
   </article>`).join("");

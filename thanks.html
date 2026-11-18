@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="site.css">
   <link rel="stylesheet" href="presets.css">
   <link rel="stylesheet" href="checkout.css">
+  <link rel="stylesheet" href="rtl.css">
+  <script src="i18n.js"></script>
 </head>
 <body class="page-presets">
   <header class="topbar is-solid">
@@ -50,8 +52,8 @@
     if (file && /^https:\/\//i.test(file)) {
       document.getElementById("download").hidden = false;
       document.getElementById("downloadBtn").href = file;
-      if (item) document.getElementById("downloadName").textContent = item.name;
-      document.getElementById("thanksLead").textContent = "Your payment went through. Your Capture One styles are ready:";
+      if (item) document.getElementById("downloadName").textContent = T(item.name);
+      document.getElementById("thanksLead").textContent = T("Your payment went through. Your Capture One styles are ready:");
     } else if (q.get("paid") === "paypal") {
       // PayPal: files are emailed by hand to the buyer's PayPal address.
       // The order is paid, so empty the bag.
@@ -59,16 +61,16 @@
       const kind = q.get("order");
       Cart.clear();
       document.getElementById("thanksLead").innerHTML =
-        `Your PayPal payment went through${item ? ` for <strong>${item.name}</strong>` : ""}. ` +
-        (kind === "cameras"
-          ? `Thank you for your DIGICAM order! I'll email you within a day to confirm shipping.`
+        (item ? T("Your PayPal payment went through for {item}.", { item: `<strong>${T(item.name)}</strong>` }) : T("Your PayPal payment went through.")) + " " +
+        T(kind === "cameras"
+          ? "Thank you for your DIGICAM order! I'll email you within a day to confirm shipping."
           : kind === "mixed"
-          ? `I'll send your preset files to your PayPal email within a few hours, and email you within a day to confirm camera shipping.`
-          : `I'll send the files to your PayPal email address within a few hours.`) +
-        (ref ? `<br><span class="order-ref">Order ${ref}</span>` : "");
+          ? "I'll send your preset files to your PayPal email within a few hours, and email you within a day to confirm camera shipping."
+          : "I'll send the files to your PayPal email address within a few hours.") +
+        (ref ? `<br><span class="order-ref">${T("Order {ref}", { ref })}</span>` : "");
       if (kind === "cameras" || kind === "mixed") {
         document.getElementById("helpLine").innerHTML =
-          `Questions about your order? Email <a href="mailto:yarintal.digicam@gmail.com">yarintal.digicam@gmail.com</a>.`;
+          T('Questions about your order? Email <a href="mailto:yarintal.digicam@gmail.com">yarintal.digicam@gmail.com</a>.');
       }
     }
   </script>

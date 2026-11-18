@@ -1,0 +1,29 @@
+/* The עב / EN button, and the texts that switch to Hebrew. Loaded on every page. */
+
+.lang {
+  padding: 2px 4px;
+  font: inherit; font-family: var(--mono, monospace); font-size: 13px;
+  color: inherit; background: none; border: 0; cursor: pointer;
+  text-decoration: underline; text-underline-offset: 4px;
+}
+.lang:hover { text-decoration-thickness: 2px; }
+.lang:lang(he) { font-family: "Heebo", "Arial Hebrew", Arial, sans-serif; font-size: 14px; }
+.topbar .back { white-space: nowrap; }
+
+/* Hide the page for a split second while Hebrew is filled in */
+html.i18n-pending body { opacity: 0; }
+
+/* A Hebrew text block: right to left, Hebrew font, no wide letter spacing */
+.he, .he *:not(input):not(textarea) {
+  font-family: "Heebo", var(--sans, "Arial Hebrew"), sans-serif !important;
+  letter-spacing: 0 !important;
+}
+.he em[dir="ltr"] { font-style: italic; }
+/* Two fields side by side (first / last name): in Hebrew, first name goes on the right */
+.cform__name:has(.he) { direction: rtl; }
+.cform__send.he { justify-self: end; }
+.he-right { text-align: right !important; }
+.he-push { margin-left: auto !important; margin-right: 0 !important; }   /* narrow paragraphs move to the right edge */
+input[dir="rtl"]::placeholder { text-align: right; }
+.he em[dir="ltr"] { unicode-bidi: isolate; }
+.he a[href^="mailto:"] { unicode-bidi: isolate; }

@@ -36,7 +36,7 @@ function render() {
       <div>
         <p class="order__name">${it.name}</p>
         <p class="order__mood">${it.sub}</p>
-        <button type="button" class="order__remove" data-id="${it.id}">Remove</button>
+        <button type="button" class="order__remove" data-id="${it.id}">${T("Remove")}</button>
       </div>
       <p class="order__price">${it.was ? `<s>${money(it.was)}</s> ` : ""}${money(it.price)}</p>
     </li>`).join("");
@@ -45,26 +45,27 @@ function render() {
   const singles = files.filter(i => i.id !== BUNDLE.id);
   const up = document.getElementById("upsell");
   up.hidden = singles.length < 2;
-  up.innerHTML = `<span>Get all ${PRESETS.length} styles for ${money(BUNDLE.price)} instead</span><span>Switch →</span>`;
+  up.innerHTML = `<span>${T("Get all {n} styles for {price} instead", { n: PRESETS.length, price: money(BUNDLE.price) })}</span><span>${T("Switch →")}</span>`;
 
   const inc = [];
-  if (files.length) inc.push("Capture One style files (.costyle)", "Sent to your PayPal email within a few hours", "Free updates to the styles you buy", "Install guide");
-  if (cams.length) inc.push(`${cams.length === 1 ? "A tested camera" : `${cams.length} tested cameras`}, cleaned and ready to shoot`, "Shipping confirmed with you by email");
+  if (files.length) inc.push(T("Capture One style files (.costyle)"), T("Sent to your PayPal email within a few hours"), T("Free updates to the styles you buy"), T("Install guide"));
+  if (cams.length) inc.push(cams.length === 1 ? T("A tested camera, cleaned and ready to shoot") : T("{n} tested cameras, cleaned and ready to shoot", { n: cams.length }), T("Shipping confirmed with you by email"));
   document.getElementById("included").innerHTML = inc.map(t => `<li>${t}</li>`).join("");
 
   document.getElementById("subtotal").textContent = money(Cart.total());
   document.getElementById("total").textContent = money(Cart.total());
   document.getElementById("shipRow").hidden = cams.length === 0;
 
-  document.getElementById("termsText").textContent =
+  document.getElementById("termsText").textContent = T(
     files.length && cams.length ? "I understand presets are digital files for Capture One, and camera shipping is confirmed by email."
     : files.length ? "I understand these are digital files for Capture One, sent by email."
-    : "I understand each camera is a used, one-of-a-kind item and shipping is confirmed by email.";
-  document.getElementById("payNote").textContent =
-    "You'll pay on PayPal's secure page, with a PayPal account or a card." +
-    (files.length ? " Your preset files are sent to your PayPal email within a few hours." : "") +
-    (cams.length ? " PayPal will ask for your shipping address." : "");
-  document.title = `Checkout (${items.length}) — Yarin Tal`;
+    : "I understand each camera is a used, one-of-a-kind item and shipping is confirmed by email.");
+  document.getElementById("payNote").textContent = [
+    T("You'll pay on PayPal's secure page, with a PayPal account or a card."),
+    files.length ? T("Your preset files are sent to your PayPal email within a few hours.") : "",
+    cams.length ? T("PayPal will ask for your shipping address.") : "",
+  ].filter(Boolean).join(" ");
+  document.title = T("Checkout ({n}) — Yarin Tal", { n: items.length });
 }
 
 document.getElementById("orderList").addEventListener("click", e => {
@@ -125,6 +126,7 @@ function setupPayPalClassic() {
       no_shipping: o.cams ? "2" : "1",     // 2 = ask for an address, 1 = don't
       no_note: "1",
       charset: "utf-8",
+      lc: LANG === "he" ? "he_IL" : "en_US",
       return: `${here}thanks.html?paid=paypal&order=${o.kind}`,
       cancel_return: location.href,
     };
@@ -155,8 +157,8 @@ function setupPayPal() {
   box.hidden = false;
 
   const s = document.createElement("script");
-  s.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PAYPAL.clientId)}&currency=${PAYPAL.currency}&intent=capture&components=buttons&locale=en_US`;
-  s.onerror = () => { msg.textContent = "PayPal couldn't load. Refresh the page, or email me to order."; };
+  s.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PAYPAL.clientId)}&currency=${PAYPAL.currency}&intent=capture&components=buttons&locale=${LANG === "he" ? "he_IL" : "en_US"}`;
+  s.onerror = () => { msg.textContent = T("PayPal couldn't load. Refresh the page, or email me to order."); };
   s.onload = () => {
     paypal.Buttons({
       style: { layout: "vertical", color: "black", shape: "rect", label: "pay", height: 48 },
@@ -186,8 +188,8 @@ function setupPayPal() {
         const q = new URLSearchParams({ paid: "paypal", order: order().kind, ref: res.id });
         location.href = `thanks.html?${q}`;
       }),
-      onCancel: () => { msg.textContent = "Payment cancelled. You haven't been charged."; },
-      onError: () => { msg.textContent = `Something went wrong with PayPal. You haven't been charged. Try again, or email ${EMAIL}.`; },
+      onCancel: () => { msg.textContent = T("Payment cancelled. You haven't been charged."); },
+      onError: () => { msg.textContent = T("Something went wrong with PayPal. You haven't been charged. Try again, or email {email}.", { email: EMAIL }); },
     }).render("#paypalButtons");
   };
   document.head.appendChild(s);

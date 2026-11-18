@@ -27,7 +27,7 @@ form.addEventListener("submit", async e => {
 
   if (FORM_ENDPOINT) {
     const btn = form.querySelector(".cform__send");
-    btn.disabled = true; btn.textContent = "Sending…";
+    btn.disabled = true; btn.textContent = T("Sending…");
     try {
       const r = await fetch(FORM_ENDPOINT, {
         method: "POST",
@@ -36,13 +36,13 @@ form.addEventListener("submit", async e => {
       });
       if (!r.ok) throw new Error();
       form.reset();
-      done.textContent = "Thank you. Your message was sent, I'll get back to you soon.";
+      done.textContent = T("Thank you. Your message was sent, I'll get back to you soon.");
       done.hidden = false;
     } catch {
-      err.textContent = `Couldn't send right now. Please email ${TO} directly.`;
+      err.textContent = T("Couldn't send right now. Please email {to} directly.", { to: TO });
       err.hidden = false;
     } finally {
-      btn.disabled = false; btn.textContent = "Send";
+      btn.disabled = false; btn.textContent = T("Send");
     }
     return;
   }

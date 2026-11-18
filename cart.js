@@ -12,8 +12,8 @@ const Cart = (() => {
   // Look up a product by id: presets, the bundle, or a camera.
   function find(id) {
     const p = typeof findProduct === "function" ? findProduct(id) : null;
-    if (p) return { id: p.id, kind: "preset", name: p.name, price: p.price, was: p.was,
-      sub: p.id === BUNDLE.id ? `All ${PRESETS.length} Capture One styles` : "Capture One style", photo: p.photo };
+    if (p) return { id: p.id, kind: "preset", name: T(p.name), price: p.price, was: p.was,
+      sub: p.id === BUNDLE.id ? T("All {n} Capture One styles", { n: PRESETS.length }) : T("Capture One style"), photo: p.photo };
     const c = typeof cameras !== "undefined" ? cameras.find(c => c.id === id) : null;
     if (c && !c.sold) return { id: c.id, kind: "camera", name: c.name, price: c.price, sub: `DIGICAM · ${c.spec}`, cam: c };
     return null;
@@ -41,12 +41,12 @@ const Cart = (() => {
     if (!it) return;
     let note = "";
     if (it.kind === "preset" && id !== BUNDLE.id && hasBundle()) {
-      note = `${it.name} is already part of ${BUNDLE.name} in your bag.`;
+      note = T("{name} is already part of {set} in your bag.", { name: it.name, set: BUNDLE.name });
     } else if (!has(id)) {
       if (id === BUNDLE.id) {
         const before = ids.length;
         ids = ids.filter(x => !PRESETS.some(p => p.id === x));      // the set already includes them
-        if (ids.length < before) note = `Your single styles were swapped for ${BUNDLE.name}, which includes them.`;
+        if (ids.length < before) note = T("Your single styles were swapped for {set}, which includes them.", { set: BUNDLE.name });
       }
       ids.push(id);
       save();
@@ -76,7 +76,7 @@ const Cart = (() => {
     btn = document.createElement("button");
     btn.type = "button";
     btn.className = "bag";
-    btn.innerHTML = `<span>Bag</span> <span class="bag__count">0</span>`;
+    btn.innerHTML = `<span>${T("Bag")}</span> <span class="bag__count">0</span>`;
     end.appendChild(btn);
   }
 
@@ -87,18 +87,18 @@ const Cart = (() => {
   drawer.innerHTML = `
     <div class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
       <div class="drawer__head">
-        <h2 id="drawerTitle">Your bag</h2>
-        <button class="drawer__close" type="button" aria-label="Close bag">×</button>
+        <h2 id="drawerTitle">${T("Your bag")}</h2>
+        <button class="drawer__close" type="button" aria-label="${T("Close bag")}">×</button>
       </div>
       <p class="drawer__msg" role="status" hidden></p>
-      <p class="drawer__empty">Your bag is empty.</p>
-      <p class="drawer__links"><a href="presets.html">Shop presets →</a> <a href="shop.html#shop">Shop cameras →</a></p>
+      <p class="drawer__empty">${T("Your bag is empty.")}</p>
+      <p class="drawer__links"><a href="presets.html">${T("Shop presets →")}</a> <a href="shop.html#shop">${T("Shop cameras →")}</a></p>
       <ul class="drawer__list"></ul>
       <div class="drawer__foot" hidden>
-        <div class="drawer__total"><span>Total</span><span class="drawer__sum"></span></div>
+        <div class="drawer__total"><span>${T("Total")}</span><span class="drawer__sum"></span></div>
         <p class="drawer__note"></p>
-        <a class="drawer__pay" href="checkout.html">Checkout</a>
-        <button class="drawer__keep" type="button">Keep shopping</button>
+        <a class="drawer__pay" href="checkout.html">${T("Checkout")}</a>
+        <button class="drawer__keep" type="button">${T("Keep shopping")}</button>
       </div>
     </div>`;
   document.body.appendChild(drawer);
@@ -109,13 +109,13 @@ const Cart = (() => {
     const n = its.length;
     if (btn) {
       btn.querySelector(".bag__count").textContent = n;
-      btn.setAttribute("aria-label", `Bag, ${n} item${n === 1 ? "" : "s"}`);
+      btn.setAttribute("aria-label", n === 1 ? T("Bag, 1 item") : T("Bag, {n} items", { n }));
     }
     $(".drawer__list").innerHTML = its.map(it => `
       <li class="bagitem">
         ${thumb(it)}
         <div class="bagitem__info"><strong>${it.name}</strong><span>${it.sub}</span>
-          <button type="button" class="bagitem__remove" data-id="${it.id}">Remove</button></div>
+          <button type="button" class="bagitem__remove" data-id="${it.id}">${T("Remove")}</button></div>
         <span class="bagitem__price">${money(it.price)}</span>
       </li>`).join("");
     $(".drawer__empty").hidden = n > 0;
@@ -124,9 +124,9 @@ const Cart = (() => {
     $(".drawer__sum").textContent = money(total());
     const cams = its.some(i => i.kind === "camera"), files = its.some(i => i.kind === "preset");
     $(".drawer__note").textContent =
-      cams && files ? "Presets are emailed to you; cameras ship after we confirm the details by email."
+      T(cams && files ? "Presets are emailed to you; cameras ship after we confirm the details by email."
       : cams ? "Each camera is one of a kind. We confirm shipping with you by email."
-      : "Capture One files, sent to your email after payment.";
+      : "Capture One files, sent to your email after payment.");
   }
 
   let lastFocus = null;
