@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DIGICAM — Shop by Yarin Tal</title>
+  <meta name="description" content="DIGICAM is a vintage camera shop: tested point-and-shoots, film cameras and early digicams, ready to shoot.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,600;0,900;1,800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shop.css">
+</head>
+<body>
+
+  <header class="topbar" id="top">
+    <nav class="topbar__side" aria-label="Shop">
+      <a href="index.html" class="back">← Yarin Tal</a>
+      <a href="presets.html">Presets</a>
+      <a href="#shop">Cameras</a>
+      <a href="#film">Film</a>
+    </nav>
+    <a href="#top" class="topbar__mark" aria-label="DIGICAM home">DIGICAM</a>
+    <nav class="topbar__side topbar__side--end" aria-label="Info">
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <button class="bag" type="button" aria-label="Bag, 0 items"><span>Bag</span> <span class="bag__count">0</span></button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO: the logo, blown up, with the big stacked menu from the reference -->
+    <section class="hero">
+      <h1 class="hero__logo">
+        <span class="logo-word">DIGICAM</span>
+        <span class="logo-tag">Vintage Camera Shop</span>
+      </h1>
+      <nav class="hero__menu" aria-label="Main">
+        <a href="#shop">Cameras</a>
+        <a href="#film">Film &amp; Batteries</a>
+        <a href="#about">How We Test</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <p class="hero__note">Point-and-shoots, early digicams &amp; 35mm film bodies. Every one cleaned, tested and shot before it ships.</p>
+    </section>
+
+    <!-- SHOP GRID -->
+    <section class="shop" id="shop">
+      <div class="section-head">
+        <h2>On the shelf</h2>
+        <div class="filters" role="group" aria-label="Filter cameras">
+          <button type="button" class="is-on" data-filter="all">All</button>
+          <button type="button" data-filter="digital">Digicams</button>
+          <button type="button" data-filter="film">Film</button>
+        </div>
+      </div>
+      <ul class="grid" id="grid"></ul>
+    </section>
+
+    <!-- FILM STRIP -->
+    <section class="film" id="film">
+      <div class="film__inner">
+        <h2>Film &amp; batteries</h2>
+        <p>Fresh 35mm stock, spare batteries and SD cards that actually fit a 2004 camera. Bundled with every order if you ask.</p>
+        <ul class="film__list">
+          <li><span>Color 200 — 36 exp</span><span>$14</span></li>
+          <li><span>B&amp;W 400 — 36 exp</span><span>$12</span></li>
+          <li><span>CR2 lithium battery</span><span>$8</span></li>
+          <li><span>xD / SD card + reader</span><span>$18</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ABOUT / PROCESS -->
+    <section class="about" id="about">
+      <h2>How we test</h2>
+      <ol class="steps">
+        <li>
+          <h3>Clean</h3>
+          <p>Lens, viewfinder and battery contacts cleaned. Sensor dust checked on digicams.</p>
+        </li>
+        <li>
+          <h3>Shoot</h3>
+          <p>A full roll or 50 frames, indoors and out, with and without flash.</p>
+        </li>
+        <li>
+          <h3>Ship</h3>
+          <p>Sample photos from your exact camera go in the listing. 30-day warranty in the box.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+      <h2>Looking for a specific camera?</h2>
+      <p>Tell us the model. We hunt it down, test it, and send you photos before you pay.</p>
+      <form class="contact__form" id="contactForm">
+        <label>
+          <span>Name</span>
+          <input type="text" name="name" required autocomplete="name">
+        </label>
+        <label>
+          <span>Email</span>
+          <input type="email" name="email" required autocomplete="email">
+        </label>
+        <label class="wide">
+          <span>Camera you're after</span>
+          <input type="text" name="camera" placeholder="e.g. Canon IXUS 70, silver">
+        </label>
+        <button type="submit">Send request</button>
+        <p class="contact__ok" id="formOk" hidden>Got it. We'll be in touch within two days.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="footer__mark">DIGICAM</span>
+    <span>A camera shop by <a href="index.html">Yarin Tal</a></span>
+    <a href="https://www.instagram.com/yarin19tal/" target="_blank" rel="noopener">Instagram</a>
+    <span>© 2026</span>
+  </footer>
+
+  <script src="shop.js"></script>
+</body>
+</html>

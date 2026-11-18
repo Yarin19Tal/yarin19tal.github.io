@@ -1,0 +1,7 @@
+# Original full-size photos (the site uses photos/)
+תמונות/
+# Private setup notes
+PAYMENTS-SETUP.md
+PAYPAL-SETUP.md
+.claude/
+.DS_Store

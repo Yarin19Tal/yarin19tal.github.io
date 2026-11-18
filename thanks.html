@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thank you — Yarin Tal</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="presets.css">
+  <link rel="stylesheet" href="checkout.css">
+</head>
+<body class="page-presets">
+  <header class="topbar is-solid">
+    <nav class="topbar__side"><a href="presets.html">← Presets</a></nav>
+    <a href="index.html" class="topbar__mark">YARIN TAL</a>
+    <div class="topbar__side topbar__side--end"></div>
+  </header>
+
+  <main class="thanks">
+    <h1>Thank you</h1>
+    <p id="thanksLead">Your payment went through. The download link for your Capture One styles is on its way to your inbox.</p>
+    <div class="download" id="download" hidden>
+      <a class="btn btn--download" id="downloadBtn" href="#" target="_blank" rel="noopener">Download <span id="downloadName">your styles</span></a>
+      <p class="download__hint">Save the file now. Your receipt is in your email.</p>
+    </div>
+    <p>Problem with the download? Email <a href="mailto:yarintal.digicam@gmail.com">yarintal.digicam@gmail.com</a> and I'll send it straight away.</p>
+    <p>I'd love to see what you make. Tag <a href="https://www.instagram.com/yarin19tal/" target="_blank" rel="noopener">@yarin19tal</a>.</p>
+    <a class="btn" href="index.html#work">Back to the photos</a>
+  </main>
+
+  <footer class="footer">
+    <span>© 2026 Yarin Tal</span>
+    <a href="presets.html">Presets</a>
+  </footer>
+
+  <script src="presets-data.js"></script>
+  <script>
+    // The payment provider sends buyers here after paying, with
+    //   thanks.html?item=<product id>&file=<download link>
+    // (set as the "success URL" of each payment page — see PAYMENTS-SETUP.md)
+    const q = new URLSearchParams(location.search);
+    const file = q.get("file");
+    const item = findProduct(q.get("item"));
+    if (file && /^https:\/\//i.test(file)) {
+      document.getElementById("download").hidden = false;
+      document.getElementById("downloadBtn").href = file;
+      if (item) document.getElementById("downloadName").textContent = item.name;
+      document.getElementById("thanksLead").textContent = "Your payment went through. Your Capture One styles are ready:";
+    } else if (q.get("paid") === "paypal") {
+      // PayPal: files are emailed by hand to the buyer's PayPal address.
+      const ref = (q.get("ref") || "").replace(/[^A-Z0-9]/gi, "");
+      document.getElementById("thanksLead").innerHTML =
+        `Your PayPal payment went through${item ? ` for <strong>${item.name}</strong>` : ""}. ` +
+        `I'll send the files to your PayPal email address within a few hours.` +
+        (ref ? `<br><span class="order-ref">Order ${ref}</span>` : "");
+    }
+  </script>
+</body>
+</html>
