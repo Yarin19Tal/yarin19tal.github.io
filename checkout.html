@@ -8,15 +8,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="cart.css">
   <link rel="stylesheet" href="site.css">
   <link rel="stylesheet" href="presets.css">
   <link rel="stylesheet" href="checkout.css">
 </head>
-<body class="page-presets">
+<body class="page-presets" data-no-bag>
 
   <header class="topbar is-solid">
     <nav class="topbar__side" aria-label="Back">
-      <a href="presets.html">← Presets</a>
+      <a href="#" id="backLink">← Keep shopping</a>
     </nav>
     <a href="index.html" class="topbar__mark">YARIN TAL</a>
     <div class="topbar__side topbar__side--end">
@@ -27,56 +28,45 @@
   <main class="checkout" id="checkout">
     <section class="order" aria-labelledby="orderTitle">
       <h1 id="orderTitle">Checkout</h1>
-      <div class="order__item">
-        <div class="order__thumb" id="orderThumb"></div>
-        <div>
-          <p class="order__name" id="orderName"></p>
-          <p class="order__mood" id="orderMood"></p>
-        </div>
-        <p class="order__price" id="orderPrice"></p>
-      </div>
-      <p class="order__desc" id="orderDesc"></p>
+      <ul class="order__list" id="orderList"></ul>
 
-      <a class="upsell" id="upsell" href="checkout.html?item=full-set" hidden></a>
+      <button class="upsell" id="upsell" type="button" hidden></button>
 
       <h2>What you get</h2>
-      <ul class="included">
-        <li>Capture One style file<span id="fileCount"></span> (.costyle)</li>
-        <li>Download link right after payment</li>
-        <li>Free updates to the styles you buy</li>
-        <li>Install guide</li>
-      </ul>
+      <ul class="included" id="included"></ul>
     </section>
 
     <aside class="pay" aria-label="Payment">
       <div class="pay__row"><span>Subtotal</span><span id="subtotal"></span></div>
+      <div class="pay__row" id="shipRow" hidden><span>Shipping</span><span>Confirmed by email</span></div>
       <div class="pay__row pay__row--total"><span>Total</span><span id="total"></span></div>
 
       <label class="pay__terms">
         <input type="checkbox" id="terms">
-        <span>I understand these are digital files for Capture One, delivered by download.</span>
+        <span id="termsText"></span>
       </label>
 
-      <a class="btn btn--pay" id="payBtn" href="#" aria-disabled="true">Continue to payment</a>
+      <a class="btn btn--pay" id="payBtn" href="#" aria-disabled="true">Pay with PayPal</a>
 
       <div class="paypal" id="paypalBox" hidden>
         <div id="paypalButtons"></div>
         <p class="paypal__msg" id="paypalMsg" role="status"></p>
       </div>
-      <p class="pay__note" id="payNote">You'll enter your card details on the secure payment page. You'll get the download link right after, plus a receipt by email.</p>
+      <p class="pay__note" id="payNote"></p>
 
       <div class="pay__offline" id="payOffline" hidden>
-        <p><strong>Online payment is being set up.</strong> Until then, send me an email and I'll get you the files today.</p>
-        <a class="btn btn--ghost" id="mailBtn" href="#">Buy by email</a>
+        <p><strong>Online payment is being set up.</strong> Until then, send me an email with your order.</p>
+        <a class="btn btn--ghost" id="mailBtn" href="#">Order by email</a>
       </div>
 
-      <p class="pay__methods">Credit card · Bit · Apple Pay · Google Pay</p>
+      <p class="pay__methods">PayPal · Credit / debit card</p>
     </aside>
   </main>
 
   <main class="checkout-missing" id="missing" hidden>
-    <h1>That item doesn't exist</h1>
-    <p><a href="presets.html">Back to presets →</a></p>
+    <h1>Your bag is empty</h1>
+    <p><a href="presets.html">Shop presets →</a></p>
+    <p><a href="shop.html#shop">Shop cameras →</a></p>
   </main>
 
   <footer class="footer">
@@ -85,6 +75,8 @@
   </footer>
 
   <script src="presets-data.js"></script>
+  <script src="cameras-data.js"></script>
+  <script src="cart.js"></script>
   <script src="checkout.js"></script>
 </body>
 </html>

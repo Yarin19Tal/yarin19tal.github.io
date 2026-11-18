@@ -17,7 +17,7 @@ list.innerHTML = PRESETS.map(p => `
       <p class="preset__desc">${p.desc}</p>
       <div class="preset__buy">
         <span class="preset__price">${CURRENCY}${p.price}</span>
-        <a class="btn" href="checkout.html?item=${p.id}">Buy</a>
+        <a class="btn" href="checkout.html?item=${p.id}">Add to bag</a>
       </div>
     </div>
   </article>`).join("");

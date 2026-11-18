@@ -13,42 +13,41 @@ const CAMERAS = { fuji: "Fuji X100V", ricoh: "Ricoh GR", bw: "Ricoh GR" };
 const photos = [
   { file: "fuji-29.jpg", w: 1776, h: 1184, series: "fuji", place: "Naples, Italy" },
   { file: "fuji-07.jpg", w: 724, h: 1086, series: "fuji", place: "Ko Phangan, Thailand" },
-  { file: "fuji-13.jpg", w: 1086, h: 724, series: "fuji", place: "Thailand" },
+  { file: "fuji-13.jpg", w: 1086, h: 724, series: "fuji", place: "Ko Phangan, Thailand" },
   { file: "ricoh-01.jpg", w: 1180, h: 665, series: "ricoh", place: "Israel" },
   { file: "fuji-34.jpg", w: 2000, h: 1333, series: "fuji", place: "" },
-  { file: "fuji-24.jpg", w: 1776, h: 1184, series: "fuji", place: "Thailand" },
+  { file: "fuji-24.jpg", w: 1776, h: 1184, series: "fuji", place: "Ko Phangan, Thailand" },
   { file: "fuji-28.jpg", w: 1184, h: 1776, series: "fuji", place: "Naples, Italy" },
   { file: "fuji-35.jpg", w: 1086, h: 724, series: "fuji", place: "" },
   { file: "fuji-03.jpg", w: 1086, h: 724, series: "fuji", place: "Italy" },
   { file: "ricoh-bw-02.jpg", w: 1325, h: 2000, series: "bw", place: "Israel" },
-  { file: "fuji-27.jpg", w: 1776, h: 1184, series: "fuji", place: "Thailand" },
+  { file: "fuji-27.jpg", w: 1776, h: 1184, series: "fuji", place: "Ko Phangan, Thailand" },
   { file: "fuji-15.jpg", w: 1086, h: 724, series: "fuji", place: "Italy" },
   { file: "fuji-33.jpg", w: 1184, h: 1776, series: "fuji", place: "Naples, Italy" },
-  { file: "fuji-22.jpg", w: 1776, h: 1184, series: "fuji", place: "Thailand" },
-  { file: "fuji-25.jpg", w: 1184, h: 1776, series: "fuji", place: "Thailand" },
+  { file: "fuji-22.jpg", w: 1776, h: 1184, series: "fuji", place: "Ko Phangan, Thailand" },
+  { file: "fuji-25.jpg", w: 1184, h: 1776, series: "fuji", place: "Ko Phangan, Thailand" },
   { file: "ricoh-03.jpg", w: 1180, h: 665, series: "ricoh", place: "Israel" },
   { file: "fuji-31.jpg", w: 1184, h: 1776, series: "fuji", place: "Naples, Italy" },
   { file: "fuji-17.jpg", w: 1086, h: 724, series: "fuji", place: "" },
-  { file: "fuji-09.jpg", w: 724, h: 1086, series: "fuji", place: "Thailand" },
+  { file: "fuji-09.jpg", w: 724, h: 1086, series: "fuji", place: "Ko Phangan, Thailand" },
   { file: "fuji-04.jpg", w: 724, h: 1086, series: "fuji", place: "Italy" },
   { file: "fuji-30.jpg", w: 1776, h: 1184, series: "fuji", place: "Naples, Italy" },
-  { file: "fuji-23.jpg", w: 1776, h: 1184, series: "fuji", place: "Thailand" },
+  { file: "fuji-23.jpg", w: 1776, h: 1184, series: "fuji", place: "Ko Phangan, Thailand" },
   { file: "ricoh-02.jpg", w: 1182, h: 666, series: "ricoh", place: "Israel" },
   { file: "fuji-37.jpg", w: 1086, h: 724, series: "fuji", place: "Italy" },
-  { file: "fuji-16.jpg", w: 724, h: 1086, series: "fuji", place: "Thailand" },
+  { file: "fuji-16.jpg", w: 724, h: 1086, series: "fuji", place: "Ko Phangan, Thailand" },
   { file: "fuji-38.jpg", w: 724, h: 1086, series: "fuji", place: "Italy" },
   { file: "fuji-32.jpg", w: 1184, h: 1776, series: "fuji", place: "Naples, Italy" },
-  { file: "fuji-26.jpg", w: 1184, h: 1776, series: "fuji", place: "Thailand" },
+  { file: "fuji-26.jpg", w: 1184, h: 1776, series: "fuji", place: "Ko Phangan, Thailand" },
   { file: "ricoh-bw-01.jpg", w: 2000, h: 1325, series: "bw", place: "Israel" },
-  { file: "fuji-12.jpg", w: 1086, h: 724, series: "fuji", place: "Italy" },
-  { file: "fuji-21.jpg", w: 1178, h: 785, series: "fuji", place: "Thailand" },
+  { file: "fuji-12.jpg", w: 1086, h: 724, series: "fuji", place: "Portofino, Italy" },
+  { file: "fuji-21.jpg", w: 1178, h: 785, series: "fuji", place: "Ko Phangan, Thailand" },
   { file: "fuji-10.jpg", w: 1086, h: 724, series: "fuji", place: "" },
-  { file: "fuji-19.jpg", w: 1086, h: 724, series: "fuji", place: "Italy" },
+  { file: "fuji-19.jpg", w: 1086, h: 724, series: "fuji", place: "Portofino, Italy" },
   { file: "fuji-36.jpg", w: 1086, h: 724, series: "fuji", place: "Italy" },
   { file: "ricoh-04.jpg", w: 1180, h: 665, series: "ricoh", place: "Israel" },
   { file: "fuji-18.jpg", w: 724, h: 1086, series: "fuji", place: "Italy" },
   { file: "fuji-08.jpg", w: 1086, h: 724, series: "fuji", place: "" },
-  { file: "fuji-20.jpg", w: 1086, h: 724, series: "fuji", place: "Italy" },
   { file: "ricoh-bw-03.jpg", w: 2000, h: 1325, series: "bw", place: "Israel" },
   { file: "fuji-06.jpg", w: 1086, h: 724, series: "fuji", place: "" },
   { file: "fuji-02.jpg", w: 724, h: 1086, series: "fuji", place: "Italy" },
@@ -176,3 +175,10 @@ const bar = document.querySelector(".topbar");
 const onScroll = () => bar.classList.toggle("is-solid", scrollY > innerHeight - 80);
 addEventListener("scroll", onScroll, { passive: true });
 onScroll();
+
+// The name in the top bar: already on the homepage → glide back to the top.
+document.querySelector(".topbar__mark").addEventListener("click", e => {
+  e.preventDefault();
+  history.replaceState(null, "", location.pathname);
+  scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+});
