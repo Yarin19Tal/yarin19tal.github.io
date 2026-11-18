@@ -121,6 +121,9 @@ const HE = {
   "e.g. Canon IXUS 70, silver": "למשל Canon IXUS 70, כסופה",
   "Send request": "שליחת בקשה",
   "Got it. We'll be in touch within two days.": "קיבלנו! נחזור אליכם תוך יומיים.",
+  "New cameras coming soon.": "מצלמות חדשות בקרוב.",
+  'The shelf is empty right now. Follow <a href="https://www.instagram.com/digicam_il/" target="_blank" rel="noopener">@digicam_il</a> to see the next drop first.':
+    'המדף ריק כרגע. עקבו אחרי <a href="https://www.instagram.com/digicam_il/" target="_blank" rel="noopener">@digicam_il</a> כדי לראות ראשונים את המצלמות הבאות.',
 
   // ---------- The bag, when it's empty ----------
   "Your bag is empty.": "הסל שלכם ריק.",

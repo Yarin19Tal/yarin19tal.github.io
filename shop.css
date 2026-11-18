@@ -283,3 +283,17 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--teal); outline-
 
 /* ---------- Bag (drawer styles live in cart.css) ---------- */
 .card__add.is-in { background: var(--ink); color: var(--paper); }
+
+/* Real camera photos fill the whole card */
+.card__frame--photo { padding: 0; overflow: hidden; background: transparent; }
+.card__frame--photo img { width: 100%; height: 100%; object-fit: contain; }
+a.card__add { color: var(--ink); }
+
+/* Empty shelf (no cameras in stock) */
+.empty-shelf {
+  padding: 56px 24px; text-align: center;
+  border: 2px dashed var(--ink); border-radius: 12px;
+}
+.empty-shelf p { margin: 0 auto; max-width: 46ch; }
+.empty-shelf__title { font-weight: 900; font-size: clamp(24px, 3vw, 34px); margin-bottom: 12px !important; }
+.empty-shelf a { color: var(--red); }

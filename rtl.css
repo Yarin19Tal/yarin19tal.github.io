@@ -26,4 +26,4 @@ html.i18n-pending body { opacity: 0; }
 .he-push { margin-left: auto !important; margin-right: 0 !important; }   /* narrow paragraphs move to the right edge */
 input[dir="rtl"]::placeholder { text-align: right; }
 .he em[dir="ltr"] { unicode-bidi: isolate; }
-.he a[href^="mailto:"] { unicode-bidi: isolate; }
+.he a[href^="mailto:"], .he a[href*="instagram.com"] { direction: ltr; unicode-bidi: isolate; }   /* @handles and emails read left to right */

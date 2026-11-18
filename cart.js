@@ -15,7 +15,7 @@ const Cart = (() => {
     if (p) return { id: p.id, kind: "preset", name: T(p.name), price: p.price, was: p.was,
       sub: p.id === BUNDLE.id ? T("All {n} Capture One styles", { n: PRESETS.length }) : T("Capture One style"), photo: p.photo };
     const c = typeof cameras !== "undefined" ? cameras.find(c => c.id === id) : null;
-    if (c && !c.sold) return { id: c.id, kind: "camera", name: c.name, price: c.price, sub: `DIGICAM · ${c.spec}`, cam: c };
+    if (c && !c.sold && c.price && typeof CAMERAS_IN_BAG !== "undefined" && CAMERAS_IN_BAG) return { id: c.id, kind: "camera", name: c.name, price: c.price, sub: `DIGICAM · ${c.spec}`, cam: c };
     return null;
   }
 
